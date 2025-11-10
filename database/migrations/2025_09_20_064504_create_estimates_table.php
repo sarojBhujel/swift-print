@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('estimates', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('client_id')->references('customers');
+            $table->foreignId('client_id')->constrained('customers');
             $table->json('job_ids')->nullable();
             $table->string('item_name');
             $table->string('estimate_no');
