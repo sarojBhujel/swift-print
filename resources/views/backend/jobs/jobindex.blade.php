@@ -72,20 +72,11 @@
                                         <th scope="col">S.N.</th>
                                         <th scope="col">Job Number</th>
                                         <th scope="col">Job Date</th>
+                                        <th scope="col">Job Name</th>
                                         <th scope="col">Customer</th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Paper</th>
-                                        <th scope="col">Equipment</th>
-                                        <th scope="col">Print Color</th>
-                                        <th scope="col">Print Type</th>
-                                        <th scope="col">Plate Set</th>
-                                        <th scope="col">Plate Date</th>
-                                        <th scope="col">Plate Size</th>
+                                        <th scope="col">Delivery Date</th>
+                                        <th scope="col">Total Page</th>
                                         <th scope="col">Quantity</th>
-                                        <th scope="col">Numbering</th>
-                                        <th scope="col">Laminatin</th>
-                                        <th scope="col">Binding</th>
-                                        <th scope="col">Paper Weight</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
@@ -133,7 +124,7 @@
                                         <select class=" js-example-basic-single" aria-label="Default select example"
                                             name="customer_id" id="customer_id" required=""
                                             style="width:100% ;height: 200% !important;">
-                                            <option selected value="">Select Cliensadfsdt</option>
+                                            <option selected value="">Select Clients</option>
 
                                         </select>
                                     </div>
@@ -198,7 +189,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="page_type" class="col-sm-12 control-label">Page Type</label>
@@ -306,10 +297,11 @@
                             {{-- for paper details  --}}
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="lamination_thermal" class="col-sm-12 control-label">Lamination Thermal</label>
+                                    <label for="lamination_thermal" class="col-sm-12 control-label">Lamination
+                                        Thermal</label>
                                     <div class="col-sm-12">
-                                        <select class="form-select" aria-label="Default select example" name="lamination_thermal"
-                                            id="lamination_thermal">
+                                        <select class="form-select" aria-label="Default select example"
+                                            name="lamination_thermal" id="lamination_thermal">
                                             <option selected value="">Select Plate By</option>
                                             <option value="matt">matt</option>
                                             <option value="gloss">gloss</option>
@@ -319,10 +311,11 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="lamination_normal" class="col-sm-12 control-label">Lamination Normal</label>
+                                    <label for="lamination_normal" class="col-sm-12 control-label">Lamination
+                                        Normal</label>
                                     <div class="col-sm-12">
-                                        <select class="form-select" aria-label="Default select example" name="lamination_normal"
-                                            id="lamination_normal">
+                                        <select class="form-select" aria-label="Default select example"
+                                            name="lamination_normal" id="lamination_normal">
                                             <option selected value="">Select Plate By</option>
                                             <option value="matt">matt</option>
                                             <option value="gloss">gloss</option>
@@ -334,115 +327,96 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="name" class="col-sm-12 control-label">Quotaion</label>
+                                    <label for="folding" class="col-sm-12 control-label">Folding </label>
                                     <div class="col-sm-12">
-                                        <input type="file" class="form-control" id="image" name="image"
-                                            placeholder="Enter Quotaion" value="" maxlength="250">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="folding"
+                                                id="folding_yes" value="1">
+                                            <label class="form-check-label" for="folding_yes">Yes</label>
+                                        </div>
+
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="folding"
+                                                id="folding_no" value="0" checked>
+                                            <label class="form-check-label" for="folding_no">No</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6 oldImage" style="display: none;">
+                            <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="name" class="col-sm-12 control-label">Old Quotaion</label>
+                                    <label for="binding" class="col-sm-12 control-label">Binding </label>
                                     <div class="col-sm-12">
-                                        <img src="" alt="" id="editImage" width="100px">
+                                        <select class="form-select" aria-label="Default select example" name="binding"
+                                            id="binding">
+                                            <option selected value="">Select Plate By</option>
+                                            <option value="perfect">Perfect</option>
+                                            <option value="hard">hard</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="binding" class="col-sm-12 control-label">Stich </label>
+                                    <div class="col-sm-12">
+                                        <select class="form-select" aria-label="Default select example" name="stich"
+                                            id="stich">
+                                            <option selected value="">Select Plate By</option>
+                                            <option value="center">center</option>
+                                            <option value="side">side</option>
+                                            <option value="other">other</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="name" class="col-sm-12 control-label">Remarks</label>
+                                    <label for="binding" class="col-sm-12 control-label">Additional </label>
                                     <div class="col-sm-12">
-                                        <textarea class="form-control" rows="5" id="note" name="note"></textarea>
+                                        <select class="form-select" aria-label="Default select example" name="binding"
+                                            id="binding">
+                                            <option selected value="">Select Plate By</option>
+                                            <option value="foil">hot foil</option>
+                                            <option value="emboss">emboss</option>
+                                            <option value="uv">uv</option>
+                                            <option value="numbering">numbering</option>
+                                            <option value="perfecting">perfecting</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6 row">
-                                <label for="name" class="col-sm-12 control-label">Customers Supplied</label>
-                                <div class="row">
-
-                                    <div class="col-md-6">
-
-                                        <div class="form-group">
-                                            <label class="form-check-label">
-                                                <input type="checkbox" class="form-check-input"
-                                                    name="is_customer_supplied_paper" id="is_customer_supplied_paper"
-                                                    value="1">Paper
-
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" id="customer_supplied_paper"
-                                                name="customer_supplied_paper" maxlength="250">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-
-                                    <div class="col-md-6">
-
-                                        <div class="form-group">
-                                            <label class="form-check-label">
-                                                <input type="checkbox" class="form-check-input"
-                                                    name="is_customer_supplied_ctp" id="is_customer_supplied_ctp"
-                                                    value="1">CTP
-                                            </label>
-
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" id="customer_supplied_ctp"
-                                                name="customer_supplied_ctp" placeholder="" maxlength="250"
-                                                required="">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-
-                                    <div class="col-md-6">
-
-                                        <div class="form-group">
-                                            <label class="form-check-label">
-                                                <input type="checkbox" class="form-check-input" name="office"
-                                                    id="office">Office
-                                            </label>
-
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-
-                                        <div class="form-group">
-                                            <label class="form-check-label">
-                                                <input type="checkbox" class="form-check-input" name="market"
-                                                    id="market">Market
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-
-                            <div class="col-md-6 offset-md-1">
-
+                            <div class="col-md-3">
                                 <div class="form-group">
-                                    <label class="form-check-label">
-                                        <input type="checkbox" class="form-check-input" name="billing" id="billing"
-                                            value="1">Billing
-
-                                    </label>
+                                    <label for="related_to" class="col-sm-12 control-label">Related To </label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" id="related_to" name="related_to"
+                                            placeholder="Enter Plate Size" value="" maxlength="250">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="remarks" class="col-sm-12 control-label">Remarks </label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" id="remarks" name="remarks"
+                                            placeholder="Enter Plate Size" value="" maxlength="250">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="special_instruction" class="col-sm-12 control-label">Spicial Instrutions </label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" id="special_instruction" name="special_instruction"
+                                            placeholder="Enter Plate Size" value="" maxlength="250">
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-offset-2 col-sm-10 text-right">
+                        <div class="col-sm-offset-2 col-sm-10 text-right pt-2">
                             <button type="submit" class="btn btn-primary" id="saveBtn" value="create">Save Job
                             </button>
                         </div>
@@ -498,114 +472,30 @@
                         searchable: true
                     },
                     {
+                        data: 'name',
+                        name: 'name',
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
                         data: 'customer_name',
                         orderable: true,
                         searchable: true,
                     },
-
-
-
                     {
-                        data: 'name',
+                        data: 'delivery_date',
                         orderable: true,
-                        searchable: true
+                        searchable: true,
                     },
-
-
                     {
-                        data: 'paper_id',
+                        data: 'total_page',
                         orderable: true,
-                        searchable: true
+                        searchable: true,
                     },
-
-                    {
-                        data: 'eqipment_id',
-                        orderable: true,
-                        searchable: true
-                    },
-
-                    {
-                        data: 'print_color',
-                        orderable: true,
-                        searchable: true
-                    },
-
-                    {
-                        data: 'print_type',
-                        orderable: true,
-                        searchable: true
-                    },
-
-                    {
-                        data: 'plate_set',
-                        orderable: true,
-                        searchable: true
-                    },
-
-                    {
-                        data: 'plate_date',
-                        orderable: true,
-                        searchable: true
-                    },
-
-                    {
-                        data: 'paper_size',
-                        orderable: true,
-                        searchable: true
-                    },
-
                     {
                         data: 'quantity',
                         orderable: true,
-                        searchable: true
-                    },
-
-                    {
-                        data: 'numbering',
-                        orderable: true,
-                        searchable: true
-                    },
-
-                    {
-                        data: 'lamination',
-                        orderable: true,
-                        searchable: true
-                    },
-
-                    {
-                        data: 'binding',
-                        orderable: true,
-                        searchable: true
-                    },
-
-                    // {
-                    //     data:'is_customer_supplied_paper'
-                    // },
-
-                    // {
-                    //     data:'customer_supplied_paper'
-                    // },
-
-                    // {
-                    //     data:'is_customer_supplied_ctp'
-                    // },
-
-                    // {
-                    //     data:'market'
-                    // },
-
-                    // {
-                    //     data:'office'
-                    // },
-
-                    // {
-                    //     data:'note'
-                    // },
-
-                    {
-                        data: 'paper_weight',
-                        orderable: true,
-                        searchable: true
+                        searchable: true,
                     },
                     {
                         data: 'action',
@@ -841,34 +731,38 @@
                     $(this).html('Sending..');
                     $(this).toggleClass('btn-primary btn-success');
                     var fd = new FormData();
-                    var files = $('#image')[0].files[0];
-                    fd.append('image', files);
                     fd.append('product_id', $('#product_id').val());
                     fd.append('name', $('#name').val());
                     fd.append('customer_id', $('#customer_id').val());
                     fd.append('paper_id', $('#paper_id').val());
-                    fd.append('eqipment_id', $('#eqipment_id').val());
-                    fd.append('print_color', $('#print_color').val());
-                    fd.append('print_type', $('#print_type').val());
-                    fd.append('plate_set', $('#plate_set').val());
-                    fd.append('plate_date', $('#plate_date').val());
-                    fd.append('paper_size', $('#paper_size').val());
-                    fd.append('quantity', $('#quantity').val());
-                    fd.append('numbering', $('#numbering').val());
-                    fd.append('lamination', $('#lamination').val());
-                    fd.append('binding', $('#binding').val());
-                    fd.append('job_number', $('#job_number').val());
-                    fd.append('is_customer_supplied_paper', $('#is_customer_supplied_paper').is(
-                        ":checked"));
-                    fd.append('customer_supplied_paper', $('#customer_supplied_paper').val());
-                    fd.append('is_customer_supplied_ctp', $('#is_customer_supplied_ctp').is(":checked"));
-                    fd.append('customer_supplied_ctp', $('#customer_supplied_ctp').val());
-                    fd.append('market', $('#market').is(":checked"));
-                    fd.append('office', $('#office').is(":checked"));
-                    fd.append('note', $('#note').val());
-                    fd.append('date', $('#date').val());
-                    fd.append('paper_weight', $('#paper_weight').val());
-                    fd.append('billing', $('#billing').is(":checked"));
+                     fd.append('job_number',$('#job_number').val());
+                     fd.append('date',$('#date').val());
+                     fd.append('delivery_date',$('#delivery_date').val());
+                     fd.append('job_description',$('#job_description').val());
+                     fd.append('inner',$('#inner').val());
+                     fd.append('outer',$('#outer').val());
+                     fd.append('quantity',$('#quantity').val());
+                     fd.append('page_type',$('#page_type').val());
+                     fd.append('total_page',$('#total_page').val());
+                     fd.append('size',$('#size').val());
+                     fd.append('total_plate',$('#total_plate').val());
+                     fd.append('total_farma',$('#total_farma').val());
+                     fd.append('plate_by',$('#plate_by').val());
+                     fd.append('plate_from',$('#plate_from').val());
+                     fd.append('plate_size',$('#plate_size').val());
+                     fd.append('machine_id',$('#machine_id').val());
+                     fd.append('paper_by',$('#paper_by').val());
+                     fd.append('paper_details',$('#paper_details').val());
+                     fd.append('lamination_thermal',$('#lamination_thermal').val());
+                     fd.append('lamination_normal',$('#lamination_normal').val());
+                     fd.append('folding',$('#folding').val());
+                     fd.append('binding',$('#binding').val());
+                     fd.append('stich',$('#stich').val());
+                     fd.append('additional',$('#additional').val());
+                     fd.append('related_to',$('#related_to').val());
+                     fd.append('remarks',$('#remarks').val());
+                     fd.append('special_instruction',$('#special_instruction').val());
+                    // fd.append('billing', $('#billing').is(":checked"));
                     $.ajax({
                         data: fd,
                         url: "{{ route('jobs.store') }}",
