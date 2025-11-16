@@ -106,9 +106,18 @@
                     <form id="productForm" name="productForm" class="form-horizontal ">
                         <input type="hidden" name="product_id" id="product_id">
                         <div class="row">
-                            <div class="col-md-7">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name" class="col-sm-12 control-label">Job No.</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" id="name" name="name"
+                                            placeholder="Enter Job Number" value="" maxlength="250" required="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="job_number" class="col-sm-12 control-label">Job Name</label>
                                     <div class="col-sm-12">
                                         <input type="text" class="form-control" id="job_number" name="job_number"
                                             placeholder="Enter Job Number" value="" maxlength="250" required="">
@@ -151,21 +160,29 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="delivery_option" class="col-sm-12 control-label">Job Discription</label>
+                                    <label class="col-sm-12 control-label">Job Description</label>
                                     <div class="col-sm-12 d-flex align-items-center gap-3">
+                                        <!-- Inner -->
+                                        <input type="hidden" name="inner" value="0">
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="delivery_today"
-                                                name="inner" value="inner">
-                                            <label class="form-check-label" for="delivery_today">Inner</label>
+                                            <input type="checkbox" class="form-check-input" id="inner"
+                                                name="inner" value="1"
+                                                {{ old('inner', $model->inner ?? 0) ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="inner">Inner</label>
                                         </div>
+
+                                        <!-- Outer -->
+                                        <input type="hidden" name="outer" value="0">
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="delivery_tomorrow"
-                                                name="outer" value="outer">
-                                            <label class="form-check-label" for="delivery_tomorrow">Outer</label>
+                                            <input type="checkbox" class="form-check-input" id="outer"
+                                                name="outer" value="1"
+                                                {{ old('outer', $model->outer ?? 0) ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="outer">Outer</label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
 
 
 
@@ -184,7 +201,7 @@
                                 <div class="form-group">
                                     <label for="name" class="col-sm-12 control-label">Quantity</label>
                                     <div class="col-sm-12">
-                                        <input type="text" class="form-control" id="quantity" name="quantity"
+                                        <input type="number" class="form-control" id="quantity" name="quantity"
                                             placeholder="Enter Quantity" value="" maxlength="250">
                                     </div>
                                 </div>
@@ -207,7 +224,7 @@
                                 <div class="form-group">
                                     <label for="total_page" class="col-sm-12 control-label">Total Page</label>
                                     <div class="col-sm-12">
-                                        <input type="text" class="form-control" id="total_page" name="total_page"
+                                        <input type="number" class="form-control" id="total_page" name="total_page"
                                             placeholder="Enter Total Page" value="" maxlength="250">
                                     </div>
                                 </div>
@@ -228,8 +245,17 @@
                                 <div class="form-group">
                                     <label for="total_plate" class="col-sm-12 control-label">Total Plate</label>
                                     <div class="col-sm-12">
-                                        <input type="text" class="form-control" id="total_plate" name="total_plate"
+                                        <input type="number" class="form-control" id="total_plate" name="total_plate"
                                             placeholder="Enter Total Plate" value="" maxlength="250">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="total_farma" class="col-sm-12 control-label">Total Forma</label>
+                                    <div class="col-sm-12">
+                                        <input type="number" class="form-control" id="total_farma" name="total_farma"
+                                            placeholder="Enter Total Forma" value="" maxlength="250">
                                     </div>
                                 </div>
                             </div>
@@ -330,14 +356,14 @@
                                     <label for="folding" class="col-sm-12 control-label">Folding </label>
                                     <div class="col-sm-12">
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="folding"
-                                                id="folding_yes" value="1">
-                                            <label class="form-check-label" for="folding_yes">Yes</label>
+                                            <input class="form-check-input" type="radio" name="folding" id="folding"
+                                                value="true">
+                                            <label class="form-check-label" for="folding">Yes</label>
                                         </div>
 
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="folding"
-                                                id="folding_no" value="0" checked>
+                                                id="folding_no" value="false" checked>
                                             <label class="form-check-label" for="folding_no">No</label>
                                         </div>
                                     </div>
@@ -376,8 +402,8 @@
                                 <div class="form-group">
                                     <label for="binding" class="col-sm-12 control-label">Additional </label>
                                     <div class="col-sm-12">
-                                        <select class="form-select" aria-label="Default select example" name="binding"
-                                            id="binding">
+                                        <select class="form-select" aria-label="Default select example" name="additional"
+                                            id="additional">
                                             <option selected value="">Select Plate By</option>
                                             <option value="foil">hot foil</option>
                                             <option value="emboss">emboss</option>
@@ -408,10 +434,12 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="special_instruction" class="col-sm-12 control-label">Spicial Instrutions </label>
+                                    <label for="special_instruction" class="col-sm-12 control-label">Spicial Instrutions
+                                    </label>
                                     <div class="col-sm-12">
-                                        <input type="text" class="form-control" id="special_instruction" name="special_instruction"
-                                            placeholder="Enter Plate Size" value="" maxlength="250">
+                                        <input type="text" class="form-control" id="special_instruction"
+                                            name="special_instruction" placeholder="Enter Plate Size" value=""
+                                            maxlength="250">
                                     </div>
                                 </div>
                             </div>
@@ -526,34 +554,34 @@
                             });
                         },
                     });
-                    $.ajax({
-                        url: '/papers-list', // Replace with your server endpoint URL
-                        method: 'GET',
-                        dataType: 'json',
-                        success: function(response) {
-                            var select = $('#paper_id');
+                    // $.ajax({
+                    //     url: '/papers-list', // Replace with your server endpoint URL
+                    //     method: 'GET',
+                    //     dataType: 'json',
+                    //     success: function(response) {
+                    //         var select = $('#paper_id');
 
-                            // Iterate over the response data and append options to the select element
-                            $.each(response, function(index, option) {
-                                select.append($('<option></option>').val(option
-                                    .id).html(option.name));
-                            });
-                        },
-                    });
-                    $.ajax({
-                        url: '/equipment-list', // Replace with your server endpoint URL
-                        method: 'GET',
-                        dataType: 'json',
-                        success: function(response) {
-                            var select = $('#machine_id');
+                    //         // Iterate over the response data and append options to the select element
+                    //         $.each(response, function(index, option) {
+                    //             select.append($('<option></option>').val(option
+                    //                 .id).html(option.name));
+                    //         });
+                    //     },
+                    // });
+                    // $.ajax({
+                    //     url: '/equipment-list', // Replace with your server endpoint URL
+                    //     method: 'GET',
+                    //     dataType: 'json',
+                    //     success: function(response) {
+                    //         var select = $('#machine_id');
 
-                            // Iterate over the response data and append options to the select element
-                            $.each(response, function(index, option) {
-                                select.append($('<option></option>').val(option
-                                    .id).html(option.name));
-                            });
-                        },
-                    });
+                    //         // Iterate over the response data and append options to the select element
+                    //         $.each(response, function(index, option) {
+                    //             select.append($('<option></option>').val(option
+                    //                 .id).html(option.name));
+                    //         });
+                    //     },
+                    // });
                 }
             });
 
@@ -734,34 +762,33 @@
                     fd.append('product_id', $('#product_id').val());
                     fd.append('name', $('#name').val());
                     fd.append('customer_id', $('#customer_id').val());
-                    fd.append('paper_id', $('#paper_id').val());
-                     fd.append('job_number',$('#job_number').val());
-                     fd.append('date',$('#date').val());
-                     fd.append('delivery_date',$('#delivery_date').val());
-                     fd.append('job_description',$('#job_description').val());
-                     fd.append('inner',$('#inner').val());
-                     fd.append('outer',$('#outer').val());
-                     fd.append('quantity',$('#quantity').val());
-                     fd.append('page_type',$('#page_type').val());
-                     fd.append('total_page',$('#total_page').val());
-                     fd.append('size',$('#size').val());
-                     fd.append('total_plate',$('#total_plate').val());
-                     fd.append('total_farma',$('#total_farma').val());
-                     fd.append('plate_by',$('#plate_by').val());
-                     fd.append('plate_from',$('#plate_from').val());
-                     fd.append('plate_size',$('#plate_size').val());
-                     fd.append('machine_id',$('#machine_id').val());
-                     fd.append('paper_by',$('#paper_by').val());
-                     fd.append('paper_details',$('#paper_details').val());
-                     fd.append('lamination_thermal',$('#lamination_thermal').val());
-                     fd.append('lamination_normal',$('#lamination_normal').val());
-                     fd.append('folding',$('#folding').val());
-                     fd.append('binding',$('#binding').val());
-                     fd.append('stich',$('#stich').val());
-                     fd.append('additional',$('#additional').val());
-                     fd.append('related_to',$('#related_to').val());
-                     fd.append('remarks',$('#remarks').val());
-                     fd.append('special_instruction',$('#special_instruction').val());
+                    fd.append('job_number', $('#job_number').val());
+                    fd.append('date', $('#date').val());
+                    fd.append('delivery_date', $('#delivery_date').val());
+                    //  fd.append('job_description',$('#job_description').val());
+                    fd.append('inner', $('#inner').val());
+                    fd.append('outer', $('#outer').val());
+                    fd.append('quantity', $('#quantity').val());
+                    fd.append('page_type', $('#page_type').val());
+                    fd.append('total_page', $('#total_page').val());
+                    fd.append('size', $('#size').val());
+                    fd.append('total_plate', $('#total_plate').val());
+                    fd.append('total_farma', $('#total_farma').val());
+                    fd.append('plate_by', $('#plate_by').val());
+                    fd.append('plate_from', $('#plate_from').val());
+                    fd.append('plate_size', $('#plate_size').val());
+                    fd.append('machine_id', $('#machine_id').val());
+                    fd.append('paper_by', $('#paper_by').val());
+                    //  fd.append('paper_details',$('#paper_details').val());
+                    fd.append('lamination_thermal', $('#lamination_thermal').val());
+                    fd.append('lamination_normal', $('#lamination_normal').val());
+                    fd.append('folding', $('#folding').val());
+                    fd.append('binding', $('#binding').val());
+                    fd.append('stich', $('#stich').val());
+                    fd.append('additional', $('#additional').val());
+                    fd.append('related_to', $('#related_to').val());
+                    fd.append('remarks', $('#remarks').val());
+                    fd.append('special_instruction', $('#special_instruction').val());
                     // fd.append('billing', $('#billing').is(":checked"));
                     $.ajax({
                         data: fd,
