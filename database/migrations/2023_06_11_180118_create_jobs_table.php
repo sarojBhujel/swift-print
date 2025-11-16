@@ -31,7 +31,7 @@ return new class extends Migration
             $table->integer('total_page')->nullable();
             $table->integer('total_farma')->nullable();
             $table->enum('plate_by',['swift','customer'])->default('swift');
-            $table->stirng('plate_from')->nullable();
+            $table->string('plate_from')->nullable();
             $table->string('plate_size')->nullable();
             $table->string('machine')->nullable();
             $table->enum('paper_by',['swift','customer'])->default('swift');

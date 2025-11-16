@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ChalanController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\DefaultEstimatesController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MachineController;
@@ -39,14 +40,18 @@ Route::group(
         // dd('dsfsd');
         return view('backend.dashboard');
     })->name('dashboard');
-    Route::resource('/jobs', JobController::class);
-    Route::get('/jobs-datatables', [JobController::class, 'getDataTableData'])->name('getDataTableData');
     Route::get('/customer-list', [CustomerController::class, 'getCustomerList'])->name('getCustomerList');
     Route::get('/papers-datatables', [PaperController::class, 'getPaperData'])->name('getPaperData');
     Route::get('/customers-datatables', [CustomerController::class, 'getCustomerData'])->name('getCustomerData');
     Route::resource('/customers', CustomerController::class);
     Route::resource('/papers', PaperController::class);
     Route::get('/papers-list', [PaperController::class, 'getPaperList']);
+    Route::resource('/jobs', JobController::class);
+    Route::get('/jobs-datatables', [JobController::class, 'getDataTableData'])->name('getDataTableData');
+    Route::resource('/default-estimate-particulars', DefaultEstimatesController::class);
+    Route::get('/default-estimate-datatables', [DefaultEstimatesController::class, 'getDataTableData'])->name('getDefaultEstimatesData');
+
+
     Route::get('/equipment-list', [MachineController::class, 'getEquipmentList']);
     Route::resource('/equipments', MachineController::class);
     Route::get('/equipments-datatables', [MachineController::class, 'getMachineData'])->name('getMachineData');

@@ -11,16 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('estimates', function (Blueprint $table) {
+        Schema::create('default_estimates', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('job_id')->references('jobs');
-            $table->date('particular_name');
-            $table->foreignId('default_estimate_id')->nullable()->references('default_estimates');
+            $table->string('particular_name');
             $table->decimal('quantity',10,2)->default(1);
             $table->string('unit')->nullable();
             $table->decimal('rate',10,2)->default(0);
             $table->decimal('amount',14,2)->virtualAs('quantity * rate')->nullable();
-            $table->string('order')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('estimates');
+        Schema::dropIfExists('default_estimates');
     }
 };

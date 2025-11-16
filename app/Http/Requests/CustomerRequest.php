@@ -20,7 +20,6 @@ class CustomerRequest extends CustomerRequest
      */
     public function rules(): array
     {
-        dd($this->all());
         return [
             'name' => 'required|string',
             'address' => 'required|string',
