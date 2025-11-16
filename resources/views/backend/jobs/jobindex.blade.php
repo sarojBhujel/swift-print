@@ -47,7 +47,6 @@
 @extends('backend.layouts.master')
 @section('title', '| Jobs')
 @push('styles')
-
 @endpush
 @section('main-content')
     <div class="row justify-content-center">
@@ -144,14 +143,42 @@
                                 <div class="form-group">
                                     <label for="name" class="col-sm-12 control-label">Job Date</label>
                                     <div class="col-sm-12">
-                                        <input type="text" class="form-control" id="date" name="date"
+                                        <input type="date" class="form-control" id="date" name="date"
                                             placeholder="Enter Job Date" value="" maxlength="250">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="name" class="col-sm-12 control-label">Delivery Date</label>
+                                    <div class="col-sm-12">
+                                        <input type="date" class="form-control" id="delivery_date"
+                                            name="delivery_date" placeholder="Enter Delivery Date" value=""
+                                            maxlength="250">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="delivery_option" class="col-sm-12 control-label">Job Discription</label>
+                                    <div class="col-sm-12 d-flex align-items-center gap-3">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="delivery_today"
+                                                name="inner" value="inner">
+                                            <label class="form-check-label" for="delivery_today">Inner</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="delivery_tomorrow"
+                                                name="outer" value="outer">
+                                            <label class="form-check-label" for="delivery_tomorrow">Outer</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
 
-                            <div class="col-md-4">
+
+                            {{-- <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="name" class="col-sm-12 control-label">Job Name</label>
                                     <div class="col-sm-12">
@@ -159,82 +186,9 @@
                                             placeholder="Enter Name" value="" maxlength="250" required>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="name" class="col-sm-12 control-label">Printing Machine</label>
-                                    <div class="col-sm-12">
-                                        <select class="form-select" aria-label="Default select example" name="machine_id"
-                                            id="machine_id">
-                                            <option selected value="">Select Printing Machine</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="name" class="col-sm-12 control-label">Print Color</label>
-                                    <div class="col-sm-12">
-                                        <input type="text" class="form-control" id="print_color" name="print_color"
-                                            placeholder="Enter Print Color" value="" maxlength="250">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="name" class="col-sm-12 control-label">Print Type</label>
-                                    <div class="col-sm-12">
-                                        <input type="text" class="form-control" id="print_type" name="print_type"
-                                            placeholder="Enter Print Type" value="" maxlength="250">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="name" class="col-sm-12 control-label">Plate/Set</label>
-                                    <div class="col-sm-12">
-                                        <input type="text" class="form-control" id="plate_set" name="plate_set"
-                                            placeholder="Enter Plate/Set" value="" maxlength="250">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="name" class="col-sm-12 control-label">Plate Date</label>
-                                    <div class="col-sm-12">
-                                        <input type="text" class="form-control" id="plate_date" name="plate_date"
-                                            placeholder="Enter Plate Date" value="" maxlength="250">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="name" class="col-sm-12 control-label">Paper</label>
-                                    <div class="col-sm-12">
-                                        {{-- <select class="form-select" aria-label="Default select example" name="paper_id"
-                                            id="paper_id">
-                                            <option selected value="">Select Paper</option>
-                                        </select> --}}
-                                        <input type="text" class="form-control" id="paper_id" name="paper_id"
-                                            placeholder="Select Paper" value="" maxlength="250">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="name" class="col-sm-12 control-label">Paper Weight</label>
-                                    <div class="col-sm-12">
-                                        <input type="text" class="form-control" id="paper_weight" name="paper_weight"
-                                            placeholder="Enter Paper Weight" value="" maxlength="250">
-                                    </div>
-                                </div>
-                            </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="name" class="col-sm-12 control-label">Quantity</label>
@@ -244,12 +198,60 @@
                                     </div>
                                 </div>
                             </div>
+                            
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="name" class="col-sm-12 control-label">Paper Size</label>
+                                    <label for="page_type" class="col-sm-12 control-label">Page Type</label>
                                     <div class="col-sm-12">
-                                        <input type="text" class="form-control" id="paper_size" name="paper_size"
-                                            placeholder="Enter Paper Size" value="" maxlength="250">
+                                        <select class="form-select" aria-label="Default select example" name="page_type"
+                                            id="page_type">
+                                            <option selected value="">Select Page Type</option>
+                                            <option value="bw">BW</option>
+                                            <option value="cmyk">CMYK</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="total_page" class="col-sm-12 control-label">Total Page</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" id="total_page" name="total_page"
+                                            placeholder="Enter Total Page" value="" maxlength="250">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="size" class="col-sm-12 control-label">Size</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" id="size" name="size"
+                                            placeholder="Enter Size" value="" maxlength="250">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="total_plate" class="col-sm-12 control-label">Total Plate</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" id="total_plate" name="total_plate"
+                                            placeholder="Enter Total Plate" value="" maxlength="250">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="plate_by" class="col-sm-12 control-label">Plate By</label>
+                                    <div class="col-sm-12">
+                                        <select class="form-select" aria-label="Default select example" name="plate_by"
+                                            id="plate_by">
+                                            <option selected value="">Select Plate By</option>
+                                            <option value="swift">Swift</option>
+                                            <option value="customer">Customer</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -257,53 +259,80 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="name" class="col-sm-12 control-label">Lamination Type</label>
+                                    <label for="plate_from" class="col-sm-12 control-label"> Plate From</label>
                                     <div class="col-sm-12">
-                                        {{-- <input type="text" class="form-control" id="lamination" name="lamination"
-                                            placeholder="Enter Lamination" value="" maxlength="250"
-                                            required=""> --}}
-                                        {{-- <select class="form-select" aria-label="Default select example" name="lamination" id="lamination">
-                                                <option selected >--Select Lamination Type--</option>
-                                                <option value="gloss">Gloss thermal lamination</option>
-                                                <option value="maat">Matt thermal lamination</option>
-                                                <option value="varnish">Varnish</option>
-                                              </select> --}}
-                                        <input type="text" class="form-control" id="lamination" name="lamination"
-                                            placeholder="Select Lamination" value="" maxlength="250">
-
+                                        <input type="text" class="form-control" id="plate_from" name="plate_from"
+                                            placeholder="Enter Plate From" value="" maxlength="250">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="name" class="col-sm-12 control-label">Binding</label>
+                                    <label for="plate_size" class="col-sm-12 control-label">Plate Size</label>
                                     <div class="col-sm-12">
-                                        <input type="text" class="form-control" id="binding" name="binding"
-                                            placeholder="Select Binding Type" value="" maxlength="250">
-                                        {{-- <select name="binding" id="binding" class="form-control">
-                                                <option value="">--Select Binding Type--</option>
-                                                <option value="spiral">Spiral binding</option>
-                                                <option value="glue">Glue binding</option>
-                                                <option value="wire">Wire-o Binding</option>
-                                                <option value="pata">Pata binding</option>
-                                                <option value="saddle">Saddle-stitched</option>
-                                            </select> --}}
+                                        <input type="text" class="form-control" id="plate_size" name="plate_size"
+                                            placeholder="Enter Plate Size" value="" maxlength="250">
+
                                     </div>
                                 </div>
                             </div>
+
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="name" class="col-sm-12 control-label">Numbering</label>
+                                    <label for="machine_id" class="col-sm-12 control-label">Machine</label>
                                     <div class="col-sm-12">
-                                        <input type="text" class="form-control" id="numbering" name="numbering"
-                                            placeholder="Enter Contact Telephone" value="" maxlength="250">
-
+                                        <select class="form-select" aria-label="Default select example" name="machine_id"
+                                            id="machine_id">
+                                            <option selected value="">Select Printing Machine</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="paper_by" class="col-sm-12 control-label">Plate By</label>
+                                    <div class="col-sm-12">
+                                        <select class="form-select" aria-label="Default select example" name="paper_by"
+                                            id="paper_by">
+                                            <option selected value="">Select Plate By</option>
+                                            <option value="swift">Swift</option>
+                                            <option value="customer">Customer</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            {{-- for paper details  --}}
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="lamination_thermal" class="col-sm-12 control-label">Lamination Thermal</label>
+                                    <div class="col-sm-12">
+                                        <select class="form-select" aria-label="Default select example" name="lamination_thermal"
+                                            id="lamination_thermal">
+                                            <option selected value="">Select Plate By</option>
+                                            <option value="matt">matt</option>
+                                            <option value="gloss">gloss</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="lamination_normal" class="col-sm-12 control-label">Lamination Normal</label>
+                                    <div class="col-sm-12">
+                                        <select class="form-select" aria-label="Default select example" name="lamination_normal"
+                                            id="lamination_normal">
+                                            <option selected value="">Select Plate By</option>
+                                            <option value="matt">matt</option>
+                                            <option value="gloss">gloss</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="name" class="col-sm-12 control-label">Quotaion</label>
                                     <div class="col-sm-12">
@@ -428,7 +457,6 @@
             </div>
         </div>
     </div>
-
 @endpush
 @push('scripts')
     {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script> --}}
@@ -831,7 +859,7 @@
                     fd.append('binding', $('#binding').val());
                     fd.append('job_number', $('#job_number').val());
                     fd.append('is_customer_supplied_paper', $('#is_customer_supplied_paper').is(
-                    ":checked"));
+                        ":checked"));
                     fd.append('customer_supplied_paper', $('#customer_supplied_paper').val());
                     fd.append('is_customer_supplied_ctp', $('#is_customer_supplied_ctp').is(":checked"));
                     fd.append('customer_supplied_ctp', $('#customer_supplied_ctp').val());
