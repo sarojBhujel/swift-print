@@ -37,7 +37,7 @@ class QuotationController extends Controller
      */
     public function index()
     {
-        return view('backend.quotation');
+        return view('backend.quotation.quotation');
     }
     public function userList()
     {

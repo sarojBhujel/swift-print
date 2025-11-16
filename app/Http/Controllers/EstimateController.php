@@ -6,6 +6,7 @@ use App\Http\Requests\EstimateRequest;
 use App\Models\Estimate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use DataTables;
 
 class EstimateController extends Controller
 {
