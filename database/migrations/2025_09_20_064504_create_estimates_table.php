@@ -13,14 +13,11 @@ return new class extends Migration
     {
         Schema::create('estimates', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('job_id')->references('jobs');
-            $table->date('particular_name');
-            $table->foreignId('default_estimate_id')->nullable()->references('default_estimates');
-            $table->decimal('quantity',10,2)->default(1);
-            $table->string('unit')->nullable();
-            $table->decimal('rate',10,2)->default(0);
-            $table->decimal('amount',14,2)->virtualAs('quantity * rate')->nullable();
-            $table->string('order')->nullable();
+            $table->json('job_ids');
+            $table->foreignId('client_id')->constrained('customers');
+            $table->string('estimate_no')->nullable();
+            $table->date('date')->nullable();
+            $table->boolean('is_vat_included')->default(true);
             $table->timestamps();
         });
     }

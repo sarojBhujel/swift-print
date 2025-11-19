@@ -3,6 +3,7 @@
 use App\Http\Controllers\ChalanController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DefaultEstimatesController;
+use App\Http\Controllers\EstimateController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MachineController;
@@ -78,6 +79,7 @@ Route::group(
     Route::get('/users-datatables', [UserController::class,'getUserData'])->name('getUserData');
     Route::get('/get-paper-balance/{id}', [StockController::class,'getbalance'])->name('getpaperData');
     Route::post('/create-customer', [JobController::class,'createCustomer'])->name('createCustomer');
+    Route::resource('/estimates', EstimateController::class);
 });
 route::get('quotation-design',function(){
     return view('quotationDesign');

@@ -88,6 +88,12 @@
                      <span class="menu-title">Default Estinamtes</span>
                  </a>
              </li>
+             <li class="nav-item">
+                 <a class="nav-link" href="{{ route('estimates.index') }}">
+                     <i class="menu-icon mdi mdi-printer-settings"></i>
+                     <span class="menu-title">Estinamtes</span>
+                 </a>
+             </li>
          {{-- @endif
          @if (auth()->user()->can('users') || auth()->user()->can('role')) --}}
              <li class="nav-item">
