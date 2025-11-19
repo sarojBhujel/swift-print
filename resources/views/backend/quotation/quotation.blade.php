@@ -27,21 +27,8 @@
                                     <tr class="mt-1">
                                         <th scope="col">S.N.</th>
                                         <th scope="col">Customer</th>
-                                        <th scope="col"></th>
+                                        <th scope="col">title</th>
                                         <th scope="col">Date</th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Paper</th>
-                                        <th scope="col">Equipment</th>
-                                        <th scope="col">Print Color</th>
-                                        <th scope="col">Print Type</th>
-                                        <th scope="col">Plate Set</th>
-                                        <th scope="col">Plate Date</th>
-                                        <th scope="col">Plate Size</th>
-                                        <th scope="col">Quantity</th>
-                                        <th scope="col">Numbering</th>
-                                        <th scope="col">Laminatin</th>
-                                        <th scope="col">Binding</th>
-                                        <th scope="col">Paper Weight</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
@@ -73,7 +60,7 @@
                         <div class="row">
                             <div class="col-md-7">
                                 <div class="form-group">
-                                    <label for="name" class="col-sm-12 control-label">Job No.</label>
+                                    <label for="name" class="col-sm-12 control-label">Quotation No.</label>
                                     <div class="col-sm-12">
                                         <input type="text" class="form-control" id="job_number" name="job_number"
                                             placeholder="Enter Job Number" value="" maxlength="250" required="">
