@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('estimate_particulars', function (Blueprint $table) {
             $table->id();
             $table->date('particular_name');
-            $table->foreignId('estimate_id')->nullable()->references('estimates');
-            $table->foreignId('default_estimate_particular_id')->nullable()->references('default_estimates');
+            $table->foreignId('estimate_id')->nullable()->constrained('estimates');
+            $table->foreignId('default_estimate_particular_id')->nullable()->constrained('default_estimates');
             $table->decimal('quantity', 10, 2)->default(1);
             $table->string('unit')->nullable();
             $table->decimal('rate', 10, 2)->default(0);

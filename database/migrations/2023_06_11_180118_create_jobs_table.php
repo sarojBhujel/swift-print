@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('jobs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('customer_id')->references('customers');
+            $table->foreignId('customer_id')->constrained('customers');
             $table->string('name')->nullable();
             $table->string('paper_id')->nullable();
             $table->string('job_number');

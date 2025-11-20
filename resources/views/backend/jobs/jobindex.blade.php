@@ -604,71 +604,36 @@
                 $.get("{{ url('jobs') }}" + '/' + product_id + '/edit', function(data) {
                     $('#modelHeading').html("Edit Job");
                     $('#saveBtn').val("edit-user");
+                    
                     $('#ajaxModel').modal('show');
                     $('#product_id').val(data.id);
                     $('#name').val(data.name);
                     $('#customer_id').val(data.customer_id);
-                    $('#paper_id').val(data.paper_id);
-                    $('#eqipment_id').val(data.eqipment_id);
-                    $('#print_color').val(data.print_color);
-                    $('#print_type').val(data.print_type);
-                    $('#plate_set').val(data.plate_set);
-                    $('#plate_date').val(data.plate_date);
-                    $('#paper_size').val(data.paper_size);
-                    $('#quantity').val(data.quantity);
-                    $('#numbering').val(data.numbering);
-                    $('#lamination').val(data.lamination);
-                    $('#binding').val(data.binding);
                     $('#job_number').val(data.job_number);
                     $('#date').val(data.date);
-                    $('#is_customer_supplied_paper').val(data.is_customer_supplied_paper);
-                    if (data.is_customer_supplied_paper === true) {
-                        $("#is_customer_supplied_paper").prop("checked", true);
-                        $('#customer_supplied_paper').show()
-                    } else {
-                        $("#is_customer_supplied_paper").prop("checked", false);
-                        $('#customer_supplied_paper').hide()
-                    }
-                    $('#customer_supplied_paper').val(data.customer_supplied_paper);
-                    $('#is_customer_supplied_ctp').val(data.is_customer_supplied_ctp);
-                    if (data.is_customer_supplied_ctp === true) {
-                        $("#is_customer_supplied_ctp").prop("checked", true);
-                        $('#customer_supplied_ctp').show()
-
-                    } else {
-                        $("#is_customer_supplied_ctp").prop("checked", false);
-                        $('#customer_supplied_ctp').hide()
-                    }
-                    $('#customer_supplied_ctp').val(data.customer_supplied_ctp);
-                    $('#market').val(data.market);
-                    if (data.market === true) {
-                        $("#market").prop("checked", true);
-
-
-                    } else {
-                        $("#market").prop("checked", false);
-                    }
-                    $('#office').val(data.office);
-                    if (data.office === true) {
-                        console.log('yes');
-                        $("#office").prop("checked", true);
-
-                    } else {
-                        $("#office").prop("checked", false);
-                    }
-                    $('#billing').val(data.billing);
-                    if (data.billing === true) {
-                        console.log('yes');
-                        $("#billing").prop("checked", true);
-
-                    } else {
-                        $("#billing").prop("checked", false);
-                    }
-                    $('#note').val(data.note);
-                    $('#job_number').val(data.job_number);
-                    $('#paper_weight').val(data.paper_weight);
-                    $("#image").prop('required', false);
-                    $("#editImage").attr("src", data.image);
+                    $('#delivery_date').val(data.delivery_date);
+                    $('#inner').val(data.inner);
+                    $('#outer').val(data.outer);
+                    $('#quantity').val(data.quantity);
+                    $('#page_type').val(data.page_type);
+                    $('#total_page').val(data.total_page);
+                    $('#size').val(data.size);
+                    $('#total_plate').val(data.total_plate);
+                    $('#total_farma').val(data.total_farma);
+                    $('#plate_by').val(data.plate_by);
+                    $('#plate_from').val(data.plate_from);
+                    $('#plate_size').val(data.plate_size);
+                    $('#machine_id').val(data.machine_id);
+                    $('#paper_by').val(data.paper_by);
+                    $('#lamination_thermal').val(data.lamination_thermal);
+                    $('#lamination_normal').val(data.lamination_normal);
+                    $('#folding').val(data.folding);
+                    $('#binding').val(data.binding);
+                    $('#stich').val(data.stich).trigger('change');
+                    $('#additional').val(data.additional);
+                    $('#related_to').val(data.related_to);
+                    $('#remarks').val(data.remarks);
+                    $('#special_instruction').val(data.special_instruction);
 
                     // $("#customer_id").select2('data', { id:data.customer_id, text: "saroj bhujel"});
                     // $("#customer_id").select2("val", data.customer_id);
@@ -678,6 +643,89 @@
                     });
                 })
             });
+            // $('body').on('click', '.editProduct', function() {
+            //     var product_id = $(this).data('id');
+            //     console.log($(this).data('id'), product_id);
+            //     $('#saveBtn').html('Edit');
+            //     $(".oldImage").show();
+            //     $("#saveBtn").toggleClass('btn-success btn-primary');
+            //     $.get("{{ url('jobs') }}" + '/' + product_id + '/edit', function(data) {
+            //         $('#modelHeading').html("Edit Job");
+            //         $('#saveBtn').val("edit-user");
+            //         $('#ajaxModel').modal('show');
+            //         $('#product_id').val(data.id);
+            //         $('#name').val(data.name);
+            //         $('#customer_id').val(data.customer_id);
+            //         $('#paper_id').val(data.paper_id);
+            //         $('#eqipment_id').val(data.eqipment_id);
+            //         $('#print_color').val(data.print_color);
+            //         $('#print_type').val(data.print_type);
+            //         $('#plate_set').val(data.plate_set);
+            //         $('#plate_date').val(data.plate_date);
+            //         $('#paper_size').val(data.paper_size);
+            //         $('#quantity').val(data.quantity);
+            //         $('#numbering').val(data.numbering);
+            //         $('#lamination').val(data.lamination);
+            //         $('#binding').val(data.binding);
+            //         $('#job_number').val(data.job_number);
+            //         $('#date').val(data.date);
+            //         $('#is_customer_supplied_paper').val(data.is_customer_supplied_paper);
+            //         if (data.is_customer_supplied_paper === true) {
+            //             $("#is_customer_supplied_paper").prop("checked", true);
+            //             $('#customer_supplied_paper').show()
+            //         } else {
+            //             $("#is_customer_supplied_paper").prop("checked", false);
+            //             $('#customer_supplied_paper').hide()
+            //         }
+            //         $('#customer_supplied_paper').val(data.customer_supplied_paper);
+            //         $('#is_customer_supplied_ctp').val(data.is_customer_supplied_ctp);
+            //         if (data.is_customer_supplied_ctp === true) {
+            //             $("#is_customer_supplied_ctp").prop("checked", true);
+            //             $('#customer_supplied_ctp').show()
+
+            //         } else {
+            //             $("#is_customer_supplied_ctp").prop("checked", false);
+            //             $('#customer_supplied_ctp').hide()
+            //         }
+            //         $('#customer_supplied_ctp').val(data.customer_supplied_ctp);
+            //         $('#market').val(data.market);
+            //         if (data.market === true) {
+            //             $("#market").prop("checked", true);
+
+
+            //         } else {
+            //             $("#market").prop("checked", false);
+            //         }
+            //         $('#office').val(data.office);
+            //         if (data.office === true) {
+            //             console.log('yes');
+            //             $("#office").prop("checked", true);
+
+            //         } else {
+            //             $("#office").prop("checked", false);
+            //         }
+            //         $('#billing').val(data.billing);
+            //         if (data.billing === true) {
+            //             console.log('yes');
+            //             $("#billing").prop("checked", true);
+
+            //         } else {
+            //             $("#billing").prop("checked", false);
+            //         }
+            //         $('#note').val(data.note);
+            //         $('#job_number').val(data.job_number);
+            //         $('#paper_weight').val(data.paper_weight);
+            //         $("#image").prop('required', false);
+            //         $("#editImage").attr("src", data.image);
+
+            //         // $("#customer_id").select2('data', { id:data.customer_id, text: "saroj bhujel"});
+            //         // $("#customer_id").select2("val", data.customer_id);
+            //         // $('[name=customer_id]').val(data.customer_id);
+            //         $("#customer_id").select2({
+            //             tags: true
+            //         });
+            //     })
+            // });
             $('body').on('click', '.viewProduct', function() {
                 var product_id = $(this).data('id');
                 $(".oldImage").show();

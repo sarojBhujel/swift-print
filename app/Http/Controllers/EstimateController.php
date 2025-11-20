@@ -93,7 +93,7 @@ class EstimateController extends BaseController
                 ])
                 ->make(true);
         } else {
-            $data['jobs']=Job::get(['id','name','client_id']);
+            $data['jobs']=Job::get(['id','name','customer_id']);
             $data['clients']=Customer::get(['id','name']);
             return view('backend.estimates.list', $data);
         }

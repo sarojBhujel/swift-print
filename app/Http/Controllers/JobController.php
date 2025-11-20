@@ -132,11 +132,11 @@ class JobController extends Controller
             'plate_from'=>$request->plate_from,
             'plate_size'=>$request->plate_size,
             'machine_id'=>$request->machine_id,
-            'paper_by'=>$request->paper_by,
+            'paper_by'=>$request->paper_by??1,
             'paper_details'=>$request->paper_details,
             'lamination_thermal'=>$request->lamination_thermal,
             'lamination_normal'=>$request->lamination_normal,
-            'folding'=>$request->folding,
+            'folding'=>$request->folding?1:0,
             'binding'=>$request->binding,
             'stich'=>$request->stich,
             'additional'=>$request->additional,
@@ -186,40 +186,7 @@ class JobController extends Controller
     public function edit($id)
     {
         $product = Job::find($id);
-        $data=[
-
-            'name'=>$product->name,
-            'customer_id'=>$product->customer_id,
-            'paper_id'=>$product->paper_id,
-            'job_number'=>$product->job_number,
-            'date'=>$product->date,
-            'delivery_date'=>$product->delivery_date,
-            'job_description'=>$product->job_description,
-            'inner'=>$product->inner,
-            'outer'=>$product->outer,
-            'page_type'=>$product->page_type,
-            'total_page'=>$product->total_page,
-            'size'=>$product->size,
-            'total_plate'=>$product->total_plate,
-            'total_farma'=>$product->total_farma,
-            'plate_by'=>$product->plate_by,
-            'plate_from'=>$product->plate_from,
-            'plate_size'=>$product->plate_size,
-            'machine_id'=>$product->machine_id,
-            'paper_by'=>$product->paper_by,
-            'paper_details'=>$product->paper_details,
-            'lamination_thermal'=>$product->lamination_thermal,
-            'lamination_normal'=>$product->lamination_normal,
-            'folding'=>$product->folding,
-            'binding'=>$product->binding,
-            'stich'=>$product->stich,
-            'additional'=>$product->additional,
-            'related_to'=>$product->related_to,
-            'remarks'=>$product->remarks,
-            'special_instruction'=>$product->special_instruction,
-            'image' => !is_null($product->image)?asset('img/'.$product->image):null
-        ];
-        return response()->json($data);
+        return response()->json($product);
     }
 
     /**

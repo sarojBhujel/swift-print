@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('quotations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('customer_id')->nullable()->references('customers');
-            $table->foreignId('job_id')->nullable()->references('customers');
+            $table->foreignId('customer_id')->nullable()->constrained('customers');
+            $table->foreignId('job_id')->nullable()->constrained('customers');
             $table->string('paper')->nullable();
             $table->string('quotation_no')->nullable();
             $table->string('print')->nullable();
