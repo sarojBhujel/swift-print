@@ -20,7 +20,7 @@
                         </div>
                         <div class="QA_table mb_30">
 
-                            <table class="table " id='empTable'>
+                            <table class="table " id='datatables-reponsive'>
                                 <thead>
                                     <tr class="mt-1">
                                         <th scope="col">S.N.</th>
@@ -64,7 +64,10 @@
                                         <select class=" js-example-basic-single" aria-label="Default select example"
                                             name="customer_id" id="customer_id" required=""
                                             style="width:100% ;height: 200% !important;">
-                                            <option selected value="">Select Clients</option>
+                                            @foreach ($clients as $job)
+                                                <option value="{{ $job->id }}" data-id="{{ $job->id }}" >
+                                                    {{ $job->name }}</option>
+                                            @endforeach
 
                                         </select>
                                     </div>
@@ -74,7 +77,7 @@
                                 <div class="form-group">
                                     <label for="unit" class="col-sm-12 control-label">Jobs</label>
                                     <div class="col-sm-12">
-                                        <select class="form-control" name="job_ids[]" multiple id="job_ids">
+                                        <select class="form-control" name="job_ids[]"  id="job_ids" multiple style="width:100% ;height: 200% !important;">
                                             @foreach ($jobs as $job)
                                                 <option value="{{ $job->id }}" data-id="{{ $job->id }}" data-client-id="{{$job->customer_id}}">
                                                     {{ $job->name }}</option>
@@ -85,19 +88,19 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="unit" class="col-sm-12 control-label">Default Unit</label>
+                                    <label for="paper" class="col-sm-12 control-label">Paper B/W</label>
                                     <div class="col-sm-12">
-                                        <input type="text" class="form-control" id="unit" name="unit"
-                                            placeholder="Enter Default Unit" value="" maxlength="250" required="">
+                                        <input type="text" class="form-control" id="paper" name="paper"
+                                            placeholder="Enter Paper B/W" value="" maxlength="250" required="">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="quantity" class="col-sm-12 control-label">Default Quantity</label>
+                                    <label for="color" class="col-sm-12 control-label">Color</label>
                                     <div class="col-sm-12">
-                                        <input type="number" class="form-control" id="quantity" name="quantity"
-                                            placeholder="Enter Quantity" value="" maxlength="250">
+                                        <input type="number" class="form-control" id="color" name="color"
+                                            placeholder="Enter Color" value="" maxlength="250">
                                     </div>
                                 </div>
                             </div>
@@ -105,14 +108,39 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="name" class="col-sm-12 control-label">Default Rate</label>
+                                    <label for="total_page" class="col-sm-12 control-label">Total Page</label>
                                     <div class="col-sm-12">
-                                        <input type="number" class="form-control" id="name" name="name"
-                                            placeholder="Enter Name" value="" maxlength="250" required>
+                                        <input type="number" class="form-control" id="total_page" name="total_page"
+                                            placeholder="Enter Total Page" value="" maxlength="250" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="size" class="col-sm-12 control-label">Size</label>
+                                    <div class="col-sm-12">
+                                        <input type="number" class="form-control" id="size" name="size"
+                                            placeholder="Enter Size" value="" maxlength="250" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="is_vat_included" class="col-sm-12 control-label">Vatable Type</label>
+                                    <div class="col-sm-12">
+                                       
+                                            <select name="is_vat_included" id="is_vat_included">
+                                                <option value="1">Included</option>
+                                                <option value="0">Excluded</option>
+                                            </select>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <div id="particular_div">
+
+                        </div>
+                        <div></div>
                         <div class="col-sm-offset-2 col-sm-10 text-right">
                             <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i
                                     class="fas fa-close"></i>

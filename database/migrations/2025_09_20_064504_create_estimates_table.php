@@ -17,6 +17,10 @@ return new class extends Migration
             $table->foreignId('client_id')->constrained('customers');
             $table->string('estimate_no')->nullable();
             $table->date('date')->nullable();
+            $table->string('paper')->nullable();
+            $table->string('color')->nullable();
+            $table->string('total_page')->nullable();
+            $table->string('size')->nullable();
             $table->boolean('is_vat_included')->default(true);
             $table->timestamps();
         });
