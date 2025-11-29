@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Requests\EstimateRequest;
 use App\Models\Customer;
 use App\Models\Estimate;
+use App\Models\EstimateParticular;
 use App\Models\Job;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 // use DataTables;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\DB;
 
 class EstimateController extends BaseController
 {
@@ -77,13 +79,24 @@ class EstimateController extends BaseController
                 //     }
                 // })
                 // ->addColumn('action', function ($team) use ($access) {
+                ->addColumn('client_name', function ($row) {
+                    return $row->client?->name ?? '';
+                })
+                ->addColumn('jobs_ids', function ($row) {
+                    $jobNames = [];
+                    $jobIds = $row->job_ids ?? [];
+                    if (is_string($jobIds)) {
+                        try { $jobIds = json_decode($jobIds, true) ?? []; } catch(\Throwable $e) { $jobIds = []; }
+                    }
+                    if (!empty($jobIds)) {
+                        $jobNames = \App\Models\Job::whereIn('id', $jobIds)->pluck('name')->toArray();
+                    }
+                    return implode(', ', $jobNames);
+                })
                 ->addColumn('action', function ($team) {
                     $btn = '';
-                    // if ($access['isedit'] == 'Y') {
-                    $btn = "<a href='javascript:void(0)' class='btn btn-primary btn-sm approve' data-pid='" . $team->id . "'><i class='fas fa-check fa-lg'></i> Approve</a>";
-
-                    $btn .= "&nbsp;<a href='javascript:void(0)' class='btn btn-danger btn-sm disapprove' data-pid='" . $team->id . "'><i class='fas fa-close fa-lg'></i> Disapprove</a>";
-                    // }
+                    $btn .= "<a href='javascript:void(0)' class='btn btn-success btn-sm editData' data-url='" . url('/estimates/' . $team->id . '/edit') . "' data-pid='" . $team->id . "'><i class='fas fa-edit fa-lg'></i> Edit</a>";
+                    $btn .= "&nbsp;<a href='javascript:void(0)' class='btn btn-danger btn-sm deleteData' data-url='" . url('/estimates/' . $team->id) . "' data-pid='" . $team->id . "'><i class='fas fa-trash fa-lg'></i> Delete</a>";
                     return $btn;
                 })
                 ->rawColumns(['action'])
@@ -123,7 +136,6 @@ class EstimateController extends BaseController
         //     //throw $th;
         //     return response()->json(['success' => 'Something went wrong !! Please try again.']);
         // }
-                $savedata = $request->except('id');
                 $data = $request->validated();
 
                 DB::beginTransaction();
@@ -153,7 +165,7 @@ class EstimateController extends BaseController
                             'quantity' => $qty[$i] ?? 1,
                             'unit' => null,
                             'rate' => $rates[$i] ?? 0,
-                            'amount' => $amounts[$i] ?? (($rates[$i] ?? 0) * ($qty[$i] ?? 1)),
+                                // amount is a generated column in DB (virtualAs quantity*rate), do not set it explicitly
                             'order' => $i+1,
                         ]);
                     }
@@ -189,7 +201,7 @@ class EstimateController extends BaseController
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Estimate $estimate)
+    public function update(EstimateRequest $request, Estimate $estimate)
     {
         $data = $request->validated();
         DB::beginTransaction();
@@ -222,7 +234,7 @@ class EstimateController extends BaseController
                     'quantity' => $qty[$i] ?? 1,
                     'unit' => null,
                     'rate' => $rates[$i] ?? 0,
-                    'amount' => $amounts[$i] ?? (($rates[$i] ?? 0) * ($qty[$i] ?? 1)),
+                        // amount is a generated column in DB (virtualAs quantity*rate), do not set it explicitly
                     'order' => $i+1,
                 ]);
             }

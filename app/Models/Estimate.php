@@ -20,4 +20,9 @@ class Estimate extends Model
     {
         return $this->hasMany(EstimateParticular::class,'estimate_id');
     }
+
+    public function client()
+    {
+        return $this->belongsTo(Customer::class, 'client_id');
+    }
 }

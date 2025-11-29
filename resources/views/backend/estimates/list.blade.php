@@ -98,6 +98,24 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
+                                    <label for="estimate_no" class="col-sm-12 control-label">Estimate No</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" id="estimate_no" name="estimate_no"
+                                            placeholder="Enter Estimate No" value="" maxlength="250">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="date" class="col-sm-12 control-label">Estimate Date</label>
+                                    <div class="col-sm-12">
+                                        <input type="date" class="form-control" id="date" name="date"
+                                            placeholder="Select Date" value="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
                                     <label for="color" class="col-sm-12 control-label">Color</label>
                                     <div class="col-sm-12">
                                         <input type="number" class="form-control" id="color" name="color"

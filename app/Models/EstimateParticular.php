@@ -14,5 +14,9 @@ class EstimateParticular extends Model
         'rate' => 'float',
         'amount' => 'float',
     ];
+    public function estimate()
+    {
+        return $this->belongsTo(Estimate::class, 'estimate_id');
+    }
     
 }

@@ -201,12 +201,12 @@ $(document).on("click", ".editData", function (e) {
                 var $wrap = $("#particular_div");
                 $wrap.empty();
                 // append header
-                var header = '<div class="row mb-2 particular-row header-row'>" +
-                    '<div class="col-md-6"><strong>Particular</strong></div>' +
-                    '<div class="col-md-2"><strong>Rate</strong></div>' +
-                    '<div class="col-md-2"><strong>Qty</strong></div>' +
-                    '<div class="col-md-2 text-end"><strong>Amount</strong></div>' +
-                    '</div>';
+                var header = `<div class="row mb-2 particular-row header-row">
+                    <div class="col-md-6"><strong>Particular</strong></div>
+                    <div class="col-md-2"><strong>Rate</strong></div>
+                    <div class="col-md-2"><strong>Qty</strong></div>
+                    <div class="col-md-2 text-end"><strong>Amount</strong></div>
+                    </div>`;
                 $wrap.append(header);
                 res.response.particulars.forEach(function(p, idx){
                     var rowHtml = createParticularRow(idx, false, p.particular_name);
