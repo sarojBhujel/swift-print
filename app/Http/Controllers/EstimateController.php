@@ -124,15 +124,46 @@ class EstimateController extends BaseController
         //     return response()->json(['success' => 'Something went wrong !! Please try again.']);
         // }
                 $savedata = $request->except('id');
-        $data_save = Event::create($savedata);
+                $data = $request->validated();
 
-        if ($data_save) {
+                DB::beginTransaction();
+                try {
+                    $estimate = Estimate::create([
+                        'job_ids' => $data['job_ids'],
+                        'client_id' => $data['customer_id'],
+                        'estimate_no' => $data['estimate_no'] ?? null,
+                        'date' => $data['date'] ?? null,
+                        'paper' => $data['paper'] ?? null,
+                        'color' => $data['color'] ?? null,
+                        'total_page' => $data['total_page'] ?? null,
+                        'size' => $data['size'] ?? null,
+                        'is_vat_included' => $data['is_vat_included'] ?? true,
+                    ]);
 
-            return $this->sendResponse(true, getMessageText('insert'));
-        } else {
+                    // Insert particulars
+                    $particulars = $data['particular'];
+                    $rates = $data['rate'];
+                    $qty = $data['qty'];
+                    $amounts = $data['amount'] ?? [];
 
-            return $this->sendError(getMessageText('insert', false));
-        }
+                    for ($i = 0; $i < count($particulars); $i++) {
+                        EstimateParticular::create([
+                            'estimate_id' => $estimate->id,
+                            'particular_name' => $particulars[$i],
+                            'quantity' => $qty[$i] ?? 1,
+                            'unit' => null,
+                            'rate' => $rates[$i] ?? 0,
+                            'amount' => $amounts[$i] ?? (($rates[$i] ?? 0) * ($qty[$i] ?? 1)),
+                            'order' => $i+1,
+                        ]);
+                    }
+
+                    DB::commit();
+                    return $this->sendResponse(true, getMessageText('insert'));
+                } catch (\Throwable $th) {
+                    DB::rollBack();
+                    return $this->sendError(getMessageText('insert', false));
+                }
     }
 
     /**
@@ -148,13 +179,11 @@ class EstimateController extends BaseController
      */
     public function edit($id)
     {
-                $event = Estimate::find($id);
-        if (isset($event)) {
-
-            return $this->sendResponse($event, getMessageText('fetch'));
-        } else {
-            return $this->sendError(getMessageText('fetch', false));
+        $estimate = Estimate::with('particulars')->find($id);
+        if ($estimate) {
+            return $this->sendResponse($estimate, getMessageText('fetch'));
         }
+        return $this->sendError(getMessageText('fetch', false));
     }
 
     /**
@@ -162,32 +191,46 @@ class EstimateController extends BaseController
      */
     public function update(Request $request, Estimate $estimate)
     {
-                $savedata = $request->validated();
-        if(empty($request->include_user_ids)){
-           $savedata['include_user_ids']=[];
-        }
-
-        // Begin database transaction
-        $event = Event::find($id);
-        if (!$event) {
-            return $this->sendError(getMessageText('fetch', false));
-        }
+        $data = $request->validated();
         DB::beginTransaction();
-        $data_save = $event->update($savedata);
+        try {
+            // map customer_id to client_id
+            $updateData = [
+                'job_ids' => $data['job_ids'],
+                'client_id' => $data['customer_id'],
+                'estimate_no' => $data['estimate_no'] ?? null,
+                'date' => $data['date'] ?? null,
+                'paper' => $data['paper'] ?? null,
+                'color' => $data['color'] ?? null,
+                'total_page' => $data['total_page'] ?? null,
+                'size' => $data['size'] ?? null,
+                'is_vat_included' => $data['is_vat_included'] ?? true,
+            ];
 
+            $estimate->update($updateData);
 
+            // Replace particulars: delete existing then insert new
+            $estimate->particulars()->delete();
+            $particulars = $data['particular'];
+            $rates = $data['rate'];
+            $qty = $data['qty'];
+            $amounts = $data['amount'] ?? [];
+            for ($i = 0; $i < count($particulars); $i++) {
+                EstimateParticular::create([
+                    'estimate_id' => $estimate->id,
+                    'particular_name' => $particulars[$i],
+                    'quantity' => $qty[$i] ?? 1,
+                    'unit' => null,
+                    'rate' => $rates[$i] ?? 0,
+                    'amount' => $amounts[$i] ?? (($rates[$i] ?? 0) * ($qty[$i] ?? 1)),
+                    'order' => $i+1,
+                ]);
+            }
 
-        // Check database transaction
-        $transactionStatus = DB::transactionLevel();
-
-        if ($transactionStatus > 0) {
-            // Database transaction success
             DB::commit();
             return $this->sendResponse(true, getMessageText('update'));
-        } else {
-            // Throw error
-            DB::rollback();
-
+        } catch (\Throwable $th) {
+            DB::rollBack();
             return $this->sendError(getMessageText('update', false));
         }
     }
@@ -197,14 +240,12 @@ class EstimateController extends BaseController
      */
     public function destroy(Estimate $estimate)
     {
-                $pm = Event::find($id);
-        if (!$pm) {
-            return $this->sendError(getMessageText('fetch', false));
-        }
-        $isdel = $pm->delete();
-        if ($isdel) {
+        // delete associated particulars then estimate
+        try {
+            $estimate->particulars()->delete();
+            $estimate->delete();
             return $this->sendResponse(true, getMessageText('delete'));
-        } else {
+        } catch (\Throwable $th) {
             return $this->sendError(getMessageText('delete', false));
         }
     }

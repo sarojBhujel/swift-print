@@ -22,22 +22,25 @@ class EstimateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'client_id'=>['required', 'integer', 'exists:customers,id'],
-            'item_name'=>['required', 'string'],
-            'estimate_no'=>['required', 'string'],
-            'page_color'=>['required', 'string','in:b&w,color'],
-            'pages'=>['required', 'integer'],
-            'size'=>['required', 'sting'],
-            'is_vat_encluded'=>['required','boolean'],
+            'customer_id' => ['required', 'integer', 'exists:customers,id'],
+            'estimate_no' => ['nullable', 'string'],
+            'date' => ['nullable', 'date'],
+            'paper' => ['nullable', 'string'],
+            'color' => ['nullable', 'string'],
+            'total_page' => ['nullable', 'integer'],
+            'size' => ['nullable', 'string'],
+            'is_vat_included' => ['nullable', 'boolean'],
 
             'job_ids'=>['required', 'array','min:1'],
             'job_ids.*'=>['required', 'integer','exists:jobs,id'],
-
-            'particular_json'=>['required', 'array','min:1'],
-            'particular_josn.*.particulars' => ['required', 'string'],
-            'particular_josn.*.rate'         => ['required', 'numeric', 'min:0'],
-            'particular_josn.*.quantity'     => ['required', 'numeric', 'min:0'],
-            'particular_josn.*.amount'       => ['required', 'numeric', 'min:0'],
+            'particular'=>['required','array','min:1'],
+            'particular.*'=>['required','string'],
+            'rate'=>['required','array'],
+            'rate.*'=>['required','numeric','min:0'],
+            'qty'=>['required','array'],
+            'qty.*'=>['required','numeric','min:0'],
+            'amount'=>['nullable','array'],
+            'amount.*'=>['nullable','numeric','min:0'],
         ];
     }
 }

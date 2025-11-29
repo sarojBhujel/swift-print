@@ -1,11 +1,49 @@
 $(document).ready(function () {
     getData();
+
+    // cache job option HTML so we can filter client-specific jobs later
+    var $jobSelect = $('#job_ids');
+    var jobOptionsHtml = $jobSelect.html();
+
+    // initialize select2 with modal parent (avoid z-index issues)
     $("#customer_id").select2({
-                    tags: true
-                });
+        tags: true,
+        width: '100%',
+        dropdownParent: $('#formModal'),
+        placeholder: 'Select customer',
+        allowClear: true
+    });
     $("#job_ids").select2({
-                    tags: true
-                });
+        tags: true,
+        width: '100%',
+        dropdownParent: $('#formModal'),
+        placeholder: 'Select jobs',
+        allowClear: true
+    });
+
+    // Re-cache job options when modal opens in case options were dynamically updated by server
+    $('#formModal').on('shown.bs.modal', function(){
+        jobOptionsHtml = $jobSelect.html();
+    });
+
+    // Filter jobs when customer changes
+    $(document).off('change', '#customer_id').on('change', '#customer_id', function () {
+        var clientId = $(this).val();
+        if (!clientId) {
+            // restore all jobs
+            $jobSelect.html(jobOptionsHtml).trigger('change');
+            return;
+        }
+        // filter options that match the selected client id using data-client-id attribute
+        var $allOptions = $(jobOptionsHtml);
+        var $filtered = $allOptions.filter(function () {
+            // data-client-id comes from blade as data-client-id attr
+            return $(this).data('client-id') == clientId;
+        });
+        $jobSelect.html($filtered);
+        // clear any selected values that no longer exist
+        $jobSelect.val(null).trigger('change');
+    });
 });
 
 function getData() {
@@ -75,6 +113,9 @@ $(document).on('click', "#addData", function (e) {
     // $("#include_user_ids").prop("disabled", true);
     // $("#include_user_ids").val("").trigger("change");
     $("#dataForm")[0].reset();
+    // set form action and clear ID for new create
+    $("#dataForm").attr('action', '/estimates');
+    $("#product_id").val('');
     $("#btnSubmit").show();
     $("#btnUpdate").hide();
     // initialize particulars area with 6 default rows
@@ -126,21 +167,61 @@ $(document).on("click", ".editData", function (e) {
             $("#btnSubmit").hide();
             $("#btnUpdate").show();
             $(".form").attr("id", "updatedataForm");
+            $("#updatedataForm").attr('action', '/estimates/' + id);
             $("#formModal").modal("show");
-            $("#title").val(res.response.title);
-            $("#start_date").val(res.response.start_date);
-            $("#end_date").val(res.response.end_date);
-            $("#start_time").val(res.response.start_time);
-            if (res.response.is_holiday == "Y") {
-                $("#is_holiday").prop("checked", true).trigger("change");
+            // map response fields to form inputs
+            $("#paper").val(res.response.paper);
+            $("#color").val(res.response.color);
+            $("#total_page").val(res.response.total_page);
+            $("#size").val(res.response.size);
+            $("#estimate_no").val(res.response.estimate_no || '');
+            $("#date").val(res.response.date || '');
+            // vatable bool
+            if (res.response.is_vat_included) {
+                $("#is_vat_included").val(1);
             } else {
-                $("#is_holiday").prop("checked", false).trigger("change");
+                $("#is_vat_included").val(0);
             }
-            $("#include_user_ids")
-                .val(res.response.include_user_ids)
-                .trigger("change");
+            // set customer and jobs
+            $("#customer_id").val(res.response.client_id).trigger('change');
+            // wait a moment for job options to re-populate based on customer change
+            setTimeout(function(){
+                if (res.response.job_ids) {
+                    // ensure job_ids is an array
+                    var jobs = res.response.job_ids;
+                    if (typeof jobs === 'string') {
+                        try { jobs = JSON.parse(jobs); } catch(e) { jobs = [jobs]; }
+                    }
+                    $("#job_ids").val(jobs).trigger('change');
+                }
+            }, 200);
 
-            $("#id").val(res.response.id);
+            // particulars: render rows
+            if (res.response.particulars && res.response.particulars.length) {
+                var $wrap = $("#particular_div");
+                $wrap.empty();
+                // append header
+                var header = '<div class="row mb-2 particular-row header-row'>" +
+                    '<div class="col-md-6"><strong>Particular</strong></div>' +
+                    '<div class="col-md-2"><strong>Rate</strong></div>' +
+                    '<div class="col-md-2"><strong>Qty</strong></div>' +
+                    '<div class="col-md-2 text-end"><strong>Amount</strong></div>' +
+                    '</div>';
+                $wrap.append(header);
+                res.response.particulars.forEach(function(p, idx){
+                    var rowHtml = createParticularRow(idx, false, p.particular_name);
+                    $wrap.append(rowHtml);
+                    var $last = $wrap.find('.particular-row').last();
+                    $last.find('.particular-rate').val(p.rate);
+                    $last.find('.particular-qty').val(p.quantity);
+                    $last.find('.particular-amount').val(p.amount);
+                });
+            } else {
+                // fallback to default rows
+                initParticularsDefaults();
+            }
+
+            $("#product_id").val(res.response.id);
         } else {
             showNotification(res.message, "error");
         }
@@ -150,12 +231,11 @@ $(document).on("click", ".editData", function (e) {
 $(document).off("submit", "#updatedataForm", function () {});
 $(document).on("submit", "#updatedataForm", function (e) {
     e.preventDefault();
-    let id = $("#id").val();
-    let dataurl = "events/" + id;
+    let id = $("#product_id").val();
+    let dataurl = "/estimates/" + id;
     let postdata = new FormData(this);
     postdata.append("_method", "PATCH");
-    let is_holiday = $("#is_holiday").is(":checked") ? "Y" : "N";
-    postdata.append("is_holiday", is_holiday);
+    // append particulars data is included in the form already
     var request = ajaxRequest(dataurl, postdata, "POST", true);
     request.done(function (res) {
         if (res.status === true) {
@@ -204,20 +284,27 @@ $(document).on("click", ".deleteData", function (e) {
   
 });
   function customers(){
-                            $.ajax({
-                        url: '/customer-list', // Replace with your server endpoint URL
-                        method: 'GET',
-                        dataType: 'json',
-                        success: function(response) {
-                            var select = $('#customer_id');
-
-                            // Iterate over the response data and append options to the select element
-                            $.each(response, function(index, option) {
-                                select.append($('<option></option>').val(option
-                                    .id).html(option.name));
-                            });
-                        },
-                    });
+    $.ajax({
+        url: '/customer-list', // Replace with your server endpoint URL
+        method: 'GET',
+        dataType: 'json',
+        success: function(response) {
+            var select = $('#customer_id');
+            // clear existing options to avoid duplicates
+            select.empty();
+            select.append($('<option></option>').val('').text('Select Customer'));
+            // Iterate over the response data and append options to the select element
+            $.each(response, function(index, option) {
+                select.append($('<option></option>').val(option.id).html(option.name));
+            });
+            // notify select2 to refresh options
+            try {
+                select.trigger('change');
+            } catch (e) {
+                // ignore errors if select2 not available
+            }
+        },
+    });
     }
 
 // ---------- Particulars handling ----------

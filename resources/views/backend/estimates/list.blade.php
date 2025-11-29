@@ -1,6 +1,7 @@
 @extends('backend.layouts.master')
 @section('title', '| Jobs')
 @push('styles')
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 @endpush
 @section('main-content')
     <div class="row justify-content-center">
@@ -61,9 +62,9 @@
                                 <div class="form-group">
                                     <label for="unit" class="col-sm-12 control-label">Client</label>
                                     <div class="col-sm-12">
-                                        <select class=" js-example-basic-single" aria-label="Default select example"
+                                        <select class="js-example-basic-single select2" aria-label="Default select example"
                                             name="customer_id" id="customer_id" required=""
-                                            style="width:100% ;height: 200% !important;">
+                                            style="width:100% ;height: 200% !important;" data-placeholder="Select Customer">
                                             @foreach ($clients as $job)
                                                 <option value="{{ $job->id }}" data-id="{{ $job->id }}" >
                                                     {{ $job->name }}</option>
@@ -77,7 +78,7 @@
                                 <div class="form-group">
                                     <label for="unit" class="col-sm-12 control-label">Jobs</label>
                                     <div class="col-sm-12">
-                                        <select class="form-control" name="job_ids[]"  id="job_ids" multiple style="width:100% ;height: 200% !important;">
+                                        <select class="form-control select2" name="job_ids[]"  id="job_ids" multiple data-placeholder="Select jobs" style="width:100% ;height: 200% !important;">
                                             @foreach ($jobs as $job)
                                                 <option value="{{ $job->id }}" data-id="{{ $job->id }}" data-client-id="{{$job->customer_id}}">
                                                     {{ $job->name }}</option>
@@ -169,8 +170,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script> --}}
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>

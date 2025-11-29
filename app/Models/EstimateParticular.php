@@ -8,5 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class EstimateParticular extends Model
 {
     use HasFactory;
+    protected $guarded = [''];
+    protected $casts = [
+        'quantity' => 'float',
+        'rate' => 'float',
+        'amount' => 'float',
+    ];
     
 }
